@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Item</title>
+</head>
+<body>
+<h1>{{ item.name }}</h1>
+<p>{{ item.description }}</p>
+<button onclick="buy()">Купить</button>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+var stripe = Stripe("{{ stripe_key }}");
+
+        function buy() {
+            fetch('/buy/{{ item.id }}', {method: 'GET'})
+        .then(response => {return response.json();})
+        .then(session => stripe.redirectToCheckout({ sessionId: session.id }));
+        }
+
+</script>
+
+</body>
+</html>
